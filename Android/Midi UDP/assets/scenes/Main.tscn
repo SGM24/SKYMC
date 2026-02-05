@@ -8,39 +8,142 @@
 [ext_resource type="Texture2D" uid="uid://cxfpr724yhw02" path="res://assets/icons/square.svg" id="5_ajan2"]
 [ext_resource type="Texture2D" uid="uid://c715t8qjwxacl" path="res://assets/icons/circle.svg" id="6_cb1w8"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider")]
+[node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider")]
 script = ExtResource("1_npkpr")
 grid = NodePath("center/CenterContainer/GridContainer")
 octave_number = NodePath("right/octave_changer")
 scale_selector = NodePath("top/scale_selector")
-slider = NodePath("right/left/VSlider")
+slider = NodePath("left/pitch_bend")
 button_scene = ExtResource("2_eruk6")
 stream_player = ExtResource("3_jv468")
 button_icons = Array[CompressedTexture2D]([ExtResource("4_3qypx"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8")])
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="center" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="center"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="center/CenterContainer"]
+layout_mode = 2
+
+[node name="top" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+
+[node name="scale_selector" type="OptionButton" parent="top"]
+layout_mode = 0
+offset_left = 64.0
+offset_right = 177.0
+offset_bottom = 31.0
+alignment = 1
+
+[node name="osc_ip" type="LineEdit" parent="top"]
+layout_mode = 0
+offset_left = -320.0
+offset_right = -208.0
+offset_bottom = 31.0
+placeholder_text = "IP"
+
+[node name="osc_port" type="LineEdit" parent="top"]
+layout_mode = 0
+offset_left = -320.0
+offset_top = 40.0
+offset_right = -208.0
+offset_bottom = 71.0
+placeholder_text = "Port"
+
+[node name="Button" type="Button" parent="top"]
+layout_mode = 0
+offset_left = -192.0
+offset_top = 24.0
+offset_right = -122.0
+offset_bottom = 55.0
+text = "connect"
+
+[node name="sound" type="CheckButton" parent="top"]
+layout_mode = 0
+offset_left = -88.0
+offset_right = 22.0
+offset_bottom = 31.0
+text = "sound"
+
+[node name="bottom" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="left" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="pitch_bend" type="VSlider" parent="left"]
+layout_mode = 0
+offset_top = 184.0
+offset_right = 128.0
+offset_bottom = 472.0
+theme = ExtResource("2_xt100")
+max_value = 16383.0
+value = 8192.0
+
+[node name="Label" type="Label" parent="left/pitch_bend"]
+layout_mode = 0
+offset_top = -56.0
+offset_right = 128.0
+offset_bottom = -21.0
+theme = ExtResource("2_xt100")
+theme_override_font_sizes/font_size = 25
+text = "Pitch bend"
 
 [node name="right" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="CheckButton" type="CheckButton" parent="right"]
 layout_mode = 0
-offset_left = 360.0
-offset_top = -312.0
-offset_right = 566.0
-offset_bottom = -254.0
+offset_left = -216.0
+offset_top = 32.0
+offset_right = -10.0
+offset_bottom = 90.0
 theme = ExtResource("2_xt100")
 text = "sustain"
 
 [node name="octave_changer" type="Control" parent="right"]
 anchors_preset = 0
-offset_left = 464.0
-offset_top = -248.0
-offset_right = 504.0
-offset_bottom = -208.0
+offset_left = -128.0
+offset_top = 96.0
+offset_right = -88.0
+offset_bottom = 136.0
 
 [node name="Label" type="Label" parent="right/octave_changer"]
 layout_mode = 0
@@ -84,10 +187,10 @@ text = ">"
 
 [node name="semitone_changer" type="Control" parent="right"]
 anchors_preset = 0
-offset_left = 464.0
-offset_top = -128.0
-offset_right = 504.0
-offset_bottom = -88.0
+offset_left = -128.0
+offset_top = 216.0
+offset_right = -88.0
+offset_bottom = 256.0
 
 [node name="Label" type="Label" parent="right/semitone_changer"]
 layout_mode = 0
@@ -134,10 +237,10 @@ text = ">"
 
 [node name="columns" type="Control" parent="right"]
 anchors_preset = 0
-offset_left = 464.0
-offset_top = 64.0
-offset_right = 504.0
-offset_bottom = 104.0
+offset_left = -128.0
+offset_top = 408.0
+offset_right = -88.0
+offset_bottom = 448.0
 
 [node name="Label" type="Label" parent="right/columns"]
 layout_mode = 0
@@ -183,10 +286,10 @@ text = ">"
 
 [node name="rows" type="Control" parent="right"]
 anchors_preset = 0
-offset_left = 464.0
-offset_top = 128.0
-offset_right = 504.0
-offset_bottom = 168.0
+offset_left = -128.0
+offset_top = 472.0
+offset_right = -88.0
+offset_bottom = 512.0
 
 [node name="Label" type="Label" parent="right/rows"]
 layout_mode = 0
@@ -230,99 +333,13 @@ rotation = -3.1415927
 theme = ExtResource("2_xt100")
 text = ">"
 
-[node name="left" type="Control" parent="right"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VSlider" type="VSlider" parent="right/left"]
-layout_mode = 0
-offset_left = -568.0
-offset_top = -144.0
-offset_right = -440.0
-offset_bottom = 144.0
-theme = ExtResource("2_xt100")
-max_value = 16383.0
-value = 8192.0
-
-[node name="Label" type="Label" parent="right/left/VSlider"]
-layout_mode = 0
-offset_top = -48.0
-offset_right = 128.0
-offset_bottom = -13.0
-theme = ExtResource("2_xt100")
-theme_override_font_sizes/font_size = 25
-text = "Pitch bend"
-
-[node name="top" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="scale_selector" type="OptionButton" parent="top"]
-layout_mode = 0
-offset_left = -144.0
-offset_top = -304.0
-offset_right = -31.0
-offset_bottom = -273.0
-alignment = 1
-
-[node name="osc_ip" type="LineEdit" parent="top"]
-layout_mode = 0
-offset_left = -528.0
-offset_top = -304.0
-offset_right = -416.0
-offset_bottom = -273.0
-placeholder_text = "IP"
-
-[node name="osc_port" type="LineEdit" parent="top"]
-layout_mode = 0
-offset_left = -528.0
-offset_top = -264.0
-offset_right = -416.0
-offset_bottom = -233.0
-placeholder_text = "Port"
-
-[node name="Button" type="Button" parent="top"]
-layout_mode = 0
-offset_left = -400.0
-offset_top = -280.0
-offset_right = -330.0
-offset_bottom = -249.0
-text = "connect"
-
-[node name="sound" type="CheckButton" parent="top"]
-layout_mode = 0
-offset_left = -296.0
-offset_top = -304.0
-offset_right = -186.0
-offset_bottom = -273.0
-text = "sound"
-
-[node name="bottom" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="center" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="CenterContainer" type="CenterContainer" parent="center"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="center/CenterContainer"]
-layout_mode = 2
-
+[connection signal="item_selected" from="top/scale_selector" to="." method="_on_scale_selector_item_selected"]
+[connection signal="text_changed" from="top/osc_ip" to="." method="_on_osc_ip_text_changed"]
+[connection signal="text_changed" from="top/osc_port" to="." method="_on_osc_port_text_changed"]
+[connection signal="pressed" from="top/Button" to="." method="_on_button_pressed"]
+[connection signal="toggled" from="top/sound" to="." method="_on_sound_toggled"]
+[connection signal="changed" from="left/pitch_bend" to="." method="_on_v_slider_changed"]
+[connection signal="drag_ended" from="left/pitch_bend" to="." method="_on_v_slider_drag_ended"]
 [connection signal="toggled" from="right/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="right/octave_changer/plus" to="." method="_on_plus_pressed"]
 [connection signal="pressed" from="right/octave_changer/minus" to="." method="_on_minus_pressed"]
@@ -332,10 +349,3 @@ layout_mode = 2
 [connection signal="pressed" from="right/columns/columm" to="." method="_on_columm_pressed"]
 [connection signal="pressed" from="right/rows/rowp" to="." method="_on_rowp_pressed"]
 [connection signal="pressed" from="right/rows/rowm" to="." method="_on_rowm_pressed"]
-[connection signal="changed" from="right/left/VSlider" to="." method="_on_v_slider_changed"]
-[connection signal="drag_ended" from="right/left/VSlider" to="." method="_on_v_slider_drag_ended"]
-[connection signal="item_selected" from="top/scale_selector" to="." method="_on_scale_selector_item_selected"]
-[connection signal="text_changed" from="top/osc_ip" to="." method="_on_osc_ip_text_changed"]
-[connection signal="text_changed" from="top/osc_port" to="." method="_on_osc_port_text_changed"]
-[connection signal="pressed" from="top/Button" to="." method="_on_button_pressed"]
-[connection signal="toggled" from="top/sound" to="." method="_on_sound_toggled"]
