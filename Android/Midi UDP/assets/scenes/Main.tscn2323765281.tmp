@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbwtr0wmttotn"]
+[gd_scene load_steps=8 format=3 uid="uid://cbwtr0wmttotn"]
 
 [ext_resource type="Script" uid="uid://dl88nn61xd6cj" path="res://assets/scripts/Main.gd" id="1_npkpr"]
 [ext_resource type="PackedScene" uid="uid://ng8c7l524kn7" path="res://assets/scenes/Button.tscn" id="2_eruk6"]
@@ -7,12 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://726loubhf0xr" path="res://assets/icons/both.svg" id="4_3qypx"]
 [ext_resource type="Texture2D" uid="uid://cxfpr724yhw02" path="res://assets/icons/square.svg" id="5_ajan2"]
 [ext_resource type="Texture2D" uid="uid://c715t8qjwxacl" path="res://assets/icons/circle.svg" id="6_cb1w8"]
-[ext_resource type="Script" uid="uid://b2sd7bev83ssl" path="res://assets/scripts/oscilloscope.gd" id="8_ajan2"]
 
 [node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider")]
 script = ExtResource("1_npkpr")
 grid = NodePath("center/CenterContainer/GridContainer")
-octave_number = NodePath("right/octave_changer/octave")
+octave_number = NodePath("right/octave_changer")
 scale_selector = NodePath("top/scale_selector")
 slider = NodePath("left/pitch_bend")
 button_scene = ExtResource("2_eruk6")
@@ -120,21 +119,6 @@ offset_bottom = -21.0
 theme = ExtResource("2_xt100")
 theme_override_font_sizes/font_size = 25
 text = "Pitch bend"
-
-[node name="graph" type="Panel" parent="left"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 528.0
-offset_right = 288.0
-offset_bottom = 640.0
-
-[node name="Line2D" type="Line2D" parent="left/graph"]
-position = Vector2(0, 56)
-scale = Vector2(0.3, 0.3)
-joint_mode = 2
-antialiased = true
-script = ExtResource("8_ajan2")
-x_scale = 3.0
 
 [node name="right" type="Control" parent="."]
 layout_mode = 3

@@ -27,7 +27,6 @@ var sound : bool = false
 var ip_address : String
 var port : int = 0
 var udp = PacketPeerUDP.new()
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	grid.add_theme_constant_override("v_separation", 25)
 	grid.add_theme_constant_override("h_separation", 25)
@@ -36,33 +35,28 @@ func _ready() -> void:
 	for i in range(all_scale_names.size()):
 		var scale_name = all_scale_names[i]
 		scale_selector.add_item(scale_name)
-	update_buttons_note(scales["major"])
 	scale_selector.select(1)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 
 var packet_queue : Array = []
 var delay_timer : float = 0.0
-const DELAY_BETWEEN_PACKETS : float = 0.01 # 10 milisegundos entre notas
+const DELAY_BETWEEN_PACKETS : float = 0.01
 
 func send_data(data_array: Array):
-	# En lugar de enviar, lo guardamos en la cola
-	packet_queue.append(data_array)
+	if ip_address != "":
+		packet_queue.append(data_array)
 
 func _process(delta: float) -> void:
-	# Si hay paquetes esperando...
+# wait for packets
 	if packet_queue.size() > 0:
 		delay_timer += delta
-		
-		# ¿Ha pasado el tiempo suficiente para enviar el siguiente?
 		if delay_timer >= DELAY_BETWEEN_PACKETS:
-			var data = packet_queue.pop_front() # Sacamos el primer mensaje
+			var data = packet_queue.pop_front() #send first packet
 			_actual_send(data)
 			delay_timer = 0.0
 
 func _actual_send(data):
 	var json_string = JSON.stringify(data)
 	udp.put_packet(json_string.to_utf8_buffer())
-	print("Enviado con delay: ", json_string)
 
 func create_button():
 	var wrapper = Control.new()
@@ -73,14 +67,9 @@ func create_button():
 func get_note_name(midi_number: int) -> String:
 	var notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 	# MIDI note 60 is C4. 
-	# Formula for Octave: (midi_number / 12) - 1
-	var octave_num = (midi_number / 12) - 1
-	# Formula for Note Index: midi_number % 12
 	var note_index = midi_number % 12
-	return notes[note_index]# + str(octave_num)
+	return notes[note_index]
 func _on_note_pressed(note):
-	print("pressed")
-	print(note)
 	send_data( [0x90,  note, 127] )
 	if sound:
 		var stream = stream_player.instantiate()
@@ -90,8 +79,8 @@ func _on_note_pressed(note):
 
 func _on_note_released(note : int ):
 	send_data([0x80, note, 0])
-	var stream = get_node(str(note))
-	if stream and not sustain and sound:
+	if not sustain and sound: # stream player deletion, check if we do not have sustain.
+		var stream = get_node(str(note))
 		stream.name = "null"
 		var tween = create_tween()
 		tween.tween_property(stream,"volume_db",-80,3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
@@ -103,7 +92,6 @@ func set_sustain(is_on: bool):
 	# 0xB0 = Control Change on Channel 1
 	# 64 = Sustain Pedal CC number
 	send_data([0xB0, 64, value])
-	print("Sustain: ", is_on)
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
@@ -113,37 +101,45 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 func _on_plus_pressed() -> void:
 	octave += 1
 	octave_number.text = str(octave)
-	update_buttons_note(selected_scale)
+	update_buttons_note()
 func _on_minus_pressed() -> void:
 	octave -= 1
 	octave_number.text = str(octave)
-	update_buttons_note(selected_scale)
+	update_buttons_note()
 
 func _on_scale_selector_item_selected(index: int) -> void:
 	var all_scale_names = scales.keys()
 	selected_scale = scales[all_scale_names[index]]
-	update_buttons_note(selected_scale)
-	print(selected_scale)
-func update_buttons_note(scale : Array):
+	update_buttons_note()
+func update_buttons_note():
 	var a : int = -1
 	for i in range(total_buttons):
 		var wrapper = grid.get_children()[i]
 		var button = wrapper.get_children()[0]
+		var button_t = button.get_children()[3]
 		var note_in_array = selected_scale[i % selected_scale.size()]
 		var octave_ = i / selected_scale.size() 
 		var note = calculate_note(note_in_array,octave_)
 		button.name = str(note)
-		if button.get_node("TouchScreenButton").get_signal_list().size() != 0:
-			button.get_node("TouchScreenButton").pressed.disconnect(_on_note_pressed)
-			button.get_node("TouchScreenButton").released.disconnect(_on_note_released)
+		print(button_t.get_signal_list().size())
+		
+		for connections in button_t.pressed.get_connections():
+			var callable = connections.callable
+			if callable.get_method() == "_on_note_pressed":
+				button_t.pressed.disconnect(callable) 
+		
+		for connections in button_t.released.get_connections():
+			var callable = connections.callable
+			if callable.get_method() == "_on_note_released":
+				button_t.released.disconnect(callable) 
+		
 		button.get_node("Label").text = get_note_name(int(note))
-		button.get_node("TouchScreenButton").pressed.connect(_on_note_pressed.bind(note))
-		button.get_node("TouchScreenButton").released.connect(_on_note_released.bind(note))
+		button_t.pressed.connect(_on_note_pressed.bind(note))
+		button_t.released.connect(_on_note_released.bind(note))
 		if a < 6:
 			a += 1
 		else:
 			a = 0
-		print(a)
 		button.get_node("TouchScreenButton").texture_normal = button_icons[a]
 
 func reload_buttons(_collumns: int, _rows : int):
@@ -157,7 +153,7 @@ func reload_buttons(_collumns: int, _rows : int):
 	grid.add_theme_constant_override("h_separation", 25)
 	for i in range(total_buttons):
 		create_button()
-	update_buttons_note(selected_scale)
+	update_buttons_note()
 
 
 func calculate_note(note : int ,octave_ : int):
@@ -175,11 +171,11 @@ func _on_button_pressed() -> void:
 
 func _on_plus_1_pressed() -> void:
 	semitone += 1
-	update_buttons_note(selected_scale)
+	update_buttons_note()
 	$semitone_changer/octave.text = str(semitone)
 func _on_minus_2_pressed() -> void:
 	semitone -= 1
-	update_buttons_note(selected_scale)
+	update_buttons_note()
 	$semitone_changer/octave.text = str(semitone)
 
 
