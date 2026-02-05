@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blhbho40h5585"]
 
-[ext_resource type="AudioStream" uid="uid://c56vx5lwbx07i" path="res://a-piano-a4-422104 (mp3cut.net).mp3" id="1_td4n3"]
-[ext_resource type="Script" uid="uid://drpg2tc5mx2sh" path="res://audio_stream_player.gd" id="2_td4n3"]
+[ext_resource type="AudioStream" uid="uid://c56vx5lwbx07i" path="res://assets/audio/a-piano-a4-422104 (mp3cut.net).mp3" id="1_td4n3"]
+[ext_resource type="Script" uid="uid://drpg2tc5mx2sh" path="res://assets/scripts/audio_stream_player.gd" id="2_td4n3"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
 stream = ExtResource("1_td4n3")

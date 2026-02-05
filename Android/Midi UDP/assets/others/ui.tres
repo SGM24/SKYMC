@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=6 format=3 uid="uid://d0ku8sc22vh5l"]
 
-[ext_resource type="Texture2D" uid="uid://dnf126ahb6np7" path="res://Proyecto nuevo(2).svg" id="1_i6sfk"]
+[ext_resource type="Texture2D" uid="uid://dnf126ahb6np7" path="res://assets/icons/Proyecto nuevo(2).svg" id="1_i6sfk"]
 
 [sub_resource type="DPITexture" id="DPITexture_1qiyq"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"16\"><rect width=\"30\" height=\"14\" x=\"1\" y=\"1\" fill=\"#fff\" fill-opacity=\".75\" rx=\"7\"/><circle cx=\"24\" cy=\"8\" r=\"5\" fill=\"#1a1a1a\"/></svg>

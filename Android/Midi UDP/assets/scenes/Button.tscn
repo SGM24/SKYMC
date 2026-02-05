@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://ng8c7l524kn7"]
 
-[ext_resource type="Script" uid="uid://cjvr02ig8ckof" path="res://button.gd" id="1_0kkfq"]
-[ext_resource type="Texture2D" uid="uid://726loubhf0xr" path="res://both.svg" id="2_0kkfq"]
-[ext_resource type="Theme" uid="uid://bddoqsq87kqid" path="res://text.tres" id="2_lc4xp"]
+[ext_resource type="Script" uid="uid://cjvr02ig8ckof" path="res://assets/scripts/button.gd" id="1_0kkfq"]
+[ext_resource type="Texture2D" uid="uid://726loubhf0xr" path="res://assets/icons/both.svg" id="2_0kkfq"]
+[ext_resource type="Theme" uid="uid://bddoqsq87kqid" path="res://assets/others/text.tres" id="2_lc4xp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0kkfq"]
 bg_color = Color(1, 1, 1, 0.21960784)

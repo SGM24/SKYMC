@@ -13,7 +13,7 @@ config_version=5
 config/name="midi android"
 run/main_scene="uid://cbwtr0wmttotn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/icons/icon.svg"
 
 [display]
 
@@ -23,6 +23,17 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[file_customization]
+
+folder_colors={
+"res://assets/audio/": "green",
+"res://assets/icons/": "purple",
+"res://assets/images/": "blue",
+"res://assets/others/": "gray",
+"res://assets/scenes/": "pink",
+"res://assets/scripts/": "gray"
+}
 
 [input_devices]
 

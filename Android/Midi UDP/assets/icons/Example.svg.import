@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca7ij3xu76bbh"
-path="res://.godot/imported/nube-blanca-cielo-azul-mar_74190-4488.png-a532b6e5813fc3b2b683c115f9bab7a9.ctex"
+uid="uid://cugeffut3k4u4"
+path="res://.godot/imported/Example.svg-5710887269cc44f8be4c48044d08d5a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://nube-blanca-cielo-azul-mar_74190-4488.png"
-dest_files=["res://.godot/imported/nube-blanca-cielo-azul-mar_74190-4488.png-a532b6e5813fc3b2b683c115f9bab7a9.ctex"]
+source_file="res://assets/icons/Example.svg"
+dest_files=["res://.godot/imported/Example.svg-5710887269cc44f8be4c48044d08d5a2.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

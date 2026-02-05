@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbwtr0wmttotn"]
 
-[ext_resource type="Script" uid="uid://dl88nn61xd6cj" path="res://node_2d.gd" id="1_0e48y"]
-[ext_resource type="Theme" uid="uid://d0ku8sc22vh5l" path="res://ui.tres" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://dl88nn61xd6cj" path="res://assets/scripts/node_2d.gd" id="1_npkpr"]
+[ext_resource type="Theme" uid="uid://d0ku8sc22vh5l" path="res://assets/others/ui.tres" id="2_xt100"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("slider")]
-script = ExtResource("1_0e48y")
+script = ExtResource("1_npkpr")
 slider = NodePath("VSlider")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -24,7 +24,7 @@ offset_left = 360.0
 offset_top = -312.0
 offset_right = 566.0
 offset_bottom = -254.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "sustain"
 
 [node name="octave_changer" type="Control" parent="."]
@@ -40,7 +40,7 @@ layout_mode = 0
 offset_left = -32.0
 offset_right = 83.0
 offset_bottom = 50.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "octave"
 
 [node name="octave" type="Label" parent="octave_changer"]
@@ -49,7 +49,7 @@ offset_left = -11.000006
 offset_top = 50.31534
 offset_right = 44.999992
 offset_bottom = 100.31534
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "4"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -62,7 +62,7 @@ offset_right = 98.0
 offset_bottom = 164.31534
 rotation = -9.424778
 scale = Vector2(1.0143571, 1.005437)
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "<"
 
 [node name="minus" type="Button" parent="octave_changer"]
@@ -72,7 +72,7 @@ offset_top = 106.31534
 offset_right = 25.999994
 offset_bottom = 164.31534
 rotation = -3.1415927
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = ">"
 
 [node name="semitone_changer" type="Control" parent="."]
@@ -89,7 +89,7 @@ offset_left = -64.0
 offset_top = -8.0
 offset_right = 98.0
 offset_bottom = 42.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "semitone"
 horizontal_alignment = 2
 
@@ -99,7 +99,7 @@ offset_left = -11.000006
 offset_top = 50.31534
 offset_right = 44.999992
 offset_bottom = 153.31534
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "0
 "
 horizontal_alignment = 1
@@ -113,7 +113,7 @@ offset_right = 98.0
 offset_bottom = 164.31534
 rotation = -9.424778
 scale = Vector2(1.0143571, 1.005437)
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "<"
 
 [node name="minus2" type="Button" parent="semitone_changer"]
@@ -123,7 +123,7 @@ offset_top = 106.31534
 offset_right = 25.999994
 offset_bottom = 164.31534
 rotation = -3.1415927
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = ">"
 
 [node name="columns" type="Control" parent="."]
@@ -140,7 +140,7 @@ offset_left = -64.0
 offset_top = -72.0
 offset_right = 98.0
 offset_bottom = -22.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "collumns"
 horizontal_alignment = 1
 
@@ -150,7 +150,7 @@ offset_left = -11.000006
 offset_top = -13.684662
 offset_right = 44.999992
 offset_bottom = 36.31534
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -163,7 +163,7 @@ offset_right = 98.0
 offset_bottom = 100.31534
 rotation = -9.424778
 scale = Vector2(1.0143571, 1.005437)
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "<"
 
 [node name="columm" type="Button" parent="columns"]
@@ -173,7 +173,7 @@ offset_top = 42.31534
 offset_right = 25.999994
 offset_bottom = 100.31534
 rotation = -3.1415927
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = ">"
 
 [node name="rows" type="Control" parent="."]
@@ -190,7 +190,7 @@ offset_left = -64.0
 offset_top = -16.0
 offset_right = 98.0
 offset_bottom = 34.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "rows"
 horizontal_alignment = 1
 
@@ -200,7 +200,7 @@ offset_left = -11.000006
 offset_top = 42.31534
 offset_right = 44.999992
 offset_bottom = 92.31534
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -213,7 +213,7 @@ offset_right = 98.0
 offset_bottom = 156.31534
 rotation = -9.424778
 scale = Vector2(1.0143571, 1.005437)
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = "<"
 
 [node name="rowm" type="Button" parent="rows"]
@@ -223,7 +223,7 @@ offset_top = 98.31534
 offset_right = 25.999994
 offset_bottom = 156.31534
 rotation = -3.1415927
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 text = ">"
 
 [node name="scale_selector" type="OptionButton" parent="."]
@@ -273,7 +273,7 @@ offset_left = -568.0
 offset_top = -144.0
 offset_right = -520.0
 offset_bottom = 144.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 max_value = 16383.0
 value = 8192.0
 
@@ -282,7 +282,7 @@ layout_mode = 0
 offset_top = -48.0
 offset_right = 128.0
 offset_bottom = -13.0
-theme = ExtResource("2_0e48y")
+theme = ExtResource("2_xt100")
 theme_override_font_sizes/font_size = 25
 text = "Pitch bend"
 

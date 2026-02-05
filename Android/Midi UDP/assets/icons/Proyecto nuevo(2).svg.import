@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4kbfe7psey5t"
-path="res://.godot/imported/nocircle.svg-935dcf757aa88de9bee83dabf76f2840.ctex"
+uid="uid://dnf126ahb6np7"
+path="res://.godot/imported/Proyecto nuevo(2).svg-35350debfbf1d2b60747720108beb821.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://nocircle.svg"
-dest_files=["res://.godot/imported/nocircle.svg-935dcf757aa88de9bee83dabf76f2840.ctex"]
+source_file="res://assets/icons/Proyecto nuevo(2).svg"
+dest_files=["res://.godot/imported/Proyecto nuevo(2).svg-35350debfbf1d2b60747720108beb821.ctex"]
 
 [params]
 

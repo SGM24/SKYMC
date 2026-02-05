@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5xva5lw37oet"
-path="res://.godot/imported/7680-4320-gradient-blur-4k-wallapapers-v0-334c91w51tbb1.png-d0066e12fd4c2e6d15cb398e59a158dc.ctex"
+uid="uid://726loubhf0xr"
+path="res://.godot/imported/both.svg-28f4315b7852fe5ad448b12b5d15e933.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://7680-4320-gradient-blur-4k-wallapapers-v0-334c91w51tbb1.png"
-dest_files=["res://.godot/imported/7680-4320-gradient-blur-4k-wallapapers-v0-334c91w51tbb1.png-d0066e12fd4c2e6d15cb398e59a158dc.ctex"]
+source_file="res://assets/icons/both.svg"
+dest_files=["res://.godot/imported/both.svg-28f4315b7852fe5ad448b12b5d15e933.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
