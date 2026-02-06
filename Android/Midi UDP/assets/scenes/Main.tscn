@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c715t8qjwxacl" path="res://assets/icons/circle.svg" id="6_cb1w8"]
 [ext_resource type="Script" uid="uid://b2sd7bev83ssl" path="res://assets/scripts/oscilloscope.gd" id="8_ajan2"]
 
-[node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider", "top", "bottom", "left", "right")]
+[node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider", "top", "bottom", "left", "right", "color_picker")]
 script = ExtResource("1_npkpr")
 grid = NodePath("center/CenterContainer/GridContainer")
 octave_number = NodePath("right/octave_changer/octave")
@@ -18,10 +18,12 @@ slider = NodePath("left/pitch_bend")
 button_scene = ExtResource("2_eruk6")
 stream_player = ExtResource("3_jv468")
 button_icons = Array[CompressedTexture2D]([ExtResource("4_3qypx"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8")])
+ui_theme = ExtResource("2_xt100")
 top = NodePath("top")
 bottom = NodePath("bottom")
 left = NodePath("left")
 right = NodePath("right")
+color_picker = NodePath("color_picker")
 
 [node name="center" type="Control" parent="."]
 layout_mode = 3
@@ -126,6 +128,15 @@ layout_mode = 0
 offset_left = 520.0
 offset_top = -64.0
 offset_right = 569.0
+offset_bottom = -6.0
+theme = ExtResource("2_xt100")
+text = "3"
+
+[node name="CheckBox4" type="CheckBox" parent="bottom"]
+layout_mode = 0
+offset_left = 584.0
+offset_top = -64.0
+offset_right = 633.0
 offset_bottom = -6.0
 theme = ExtResource("2_xt100")
 text = "3"
@@ -383,6 +394,63 @@ antialiased = true
 script = ExtResource("8_ajan2")
 x_scale = 3.0
 
+[node name="color_picker" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="color_picker"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = 324.0
+offset_right = 176.0
+offset_bottom = 956.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(172, 0)
+theme = ExtResource("2_xt100")
+
+[node name="ColorPicker" type="ColorPicker" parent="color_picker/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 322.0
+offset_bottom = 620.0
+alignment = 1
+picker_shape = 2
+sampler_visible = false
+color_modes_visible = false
+presets_visible = false
+
+[node name="0" parent="color_picker" instance=ExtResource("2_eruk6")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 296.0
+offset_top = 572.0
+offset_right = 296.0
+offset_bottom = 572.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="text_changed" from="top/osc_ip" to="." method="_on_osc_ip_text_changed"]
 [connection signal="text_changed" from="top/osc_port" to="." method="_on_osc_port_text_changed"]
 [connection signal="pressed" from="top/Button" to="." method="_on_button_pressed"]
@@ -391,6 +459,7 @@ x_scale = 3.0
 [connection signal="toggled" from="bottom/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="toggled" from="bottom/CheckBox2" to="." method="_on_check_box_2_toggled"]
 [connection signal="toggled" from="bottom/CheckBox3" to="." method="_on_check_box_3_toggled"]
+[connection signal="toggled" from="bottom/CheckBox4" to="." method="_on_check_box_4_toggled"]
 [connection signal="drag_ended" from="left/pitch_bend" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="left/pitch_bend" to="." method="_on_pitch_bend_value_changed"]
 [connection signal="toggled" from="right/CheckButton" to="." method="_on_check_button_toggled"]
@@ -402,3 +471,4 @@ x_scale = 3.0
 [connection signal="pressed" from="right/columns/columm" to="." method="_on_columm_pressed"]
 [connection signal="pressed" from="right/rows/rowp" to="." method="_on_rowp_pressed"]
 [connection signal="pressed" from="right/rows/rowm" to="." method="_on_rowm_pressed"]
+[connection signal="color_changed" from="color_picker/Panel/ColorPicker" to="." method="_on_color_picker_color_changed"]

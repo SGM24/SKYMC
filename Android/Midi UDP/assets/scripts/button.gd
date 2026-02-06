@@ -1,14 +1,23 @@
 extends Control
-
+var tween : Tween 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var style = $ColorRect.get_theme_stylebox("panel")
-	var unique_style = style.duplicate()
-	$ColorRect.add_theme_stylebox_override("panel", unique_style)
+	if $ColorRect.material:
+		$ColorRect.material = $ColorRect.material.duplicate()
 
 func _on_touch_screen_button_pressed() -> void:
-	$AnimationPlayer.play("press")
+	if tween and tween.is_valid():
+		tween.kill()
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self,"scale",Vector2(1.2,1.2),0.1)
+	tween.tween_property($ColorRect,"material:shader_parameter/alpha_multiplier",2,0.05)
 
 
 func _on_touch_screen_button_released() -> void:
-	$AnimationPlayer.play("release")
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self,"scale",Vector2(1,1),0.1)
+	tween.tween_property($ColorRect,"material:shader_parameter/alpha_multiplier",1,0.1)

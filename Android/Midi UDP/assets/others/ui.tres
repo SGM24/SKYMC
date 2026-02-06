@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d0ku8sc22vh5l"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://d0ku8sc22vh5l"]
 
 [ext_resource type="Texture2D" uid="uid://dnf126ahb6np7" path="res://assets/icons/Proyecto nuevo(2).svg" id="1_i6sfk"]
 
@@ -11,6 +11,18 @@ base_scale = 2.0
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"16\"><g fill-opacity=\".5\"><rect width=\"30\" height=\"14\" x=\"1\" y=\"1\" fill=\"#1a1a1a\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\" fill=\"#fff\"/></g></svg>
 "
 base_scale = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxdfx"]
+bg_color = Color(1, 1, 1, 0.21960784)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i6sfk"]
 
@@ -25,6 +37,7 @@ CheckButton/icons/checked = SubResource("DPITexture_1qiyq")
 CheckButton/icons/unchecked = SubResource("DPITexture_i6sfk")
 Label/constants/outline_size = 12
 Label/font_sizes/font_size = 36
+Panel/styles/panel = SubResource("StyleBoxFlat_kxdfx")
 VSlider/constants/center_grabber = 1
 VSlider/icons/grabber = ExtResource("1_i6sfk")
 VSlider/icons/grabber_highlight = ExtResource("1_i6sfk")

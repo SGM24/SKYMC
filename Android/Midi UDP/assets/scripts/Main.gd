@@ -21,10 +21,13 @@ var total_buttons : int = 0
 @export var button_scene : PackedScene
 @export var stream_player : PackedScene
 @export var button_icons : Array[CompressedTexture2D]
+@export var ui_theme : Theme
+@export var center : Control
 @export var top : Control
 @export var bottom : Control
 @export var left : Control
 @export var right : Control
+@export var color_picker : Control
 var sustain : bool = false
 var midi_on : bool = false
 var sound : bool = false
@@ -121,7 +124,7 @@ func update_buttons_note():
 	for i in range(total_buttons):
 		var wrapper = grid.get_children()[i]
 		var button = wrapper.get_children()[0]
-		var button_t = button.get_children()[3]
+		var button_t = button.get_children()[2]
 		var note_in_array = selected_scale[i % selected_scale.size()]
 		var octave_ = i / selected_scale.size() 
 		var note = calculate_note(note_in_array,octave_)
@@ -247,29 +250,46 @@ func _on_pitch_bend_value_changed(value: float) -> void:
 			if i is AudioStreamPlayer:
 				i.pitch_scale = i.base_pitch * bend_pitch_multiplier
 
-var ui_tween : Tween
-func ui_tweener_handler(toggled_on :bool ,root : Node, add_pos : Vector2 ,time :float,delay_add : float, interval : float):
-	ui_tween = create_tween()
+
+func ui_tweener_handler(toggled_on :bool ,root : Node, add_pos : Vector2 ,time :float,delay_add : float, interval : float, initial_delay : float,reverse : bool):
+	var childrens = root.get_children()
+	if reverse: childrens.reverse()
+	if initial_delay > 0:
+		await get_tree().create_timer(initial_delay).timeout
+	var ui_tween = create_tween()
 	ui_tween.set_parallel()
 	var delay = 0
-	for node in root.get_children():
+	for node in childrens:
 		if not node.has_meta("home_pos"):
 			node.set_meta("home_pos",node.position)
 		var home_pos = node.get_meta("home_pos")
 		var target_pos = home_pos + add_pos if toggled_on else home_pos
 		ui_tween.tween_property(node,"position",target_pos,time).set_delay(delay)
 		ui_tween.set_trans(Tween.TRANS_SINE)
-		ui_tween.set_ease(Tween.EASE_OUT)
-		ui_tween.tween_interval(interval)
+		if toggled_on:
+			ui_tween.set_ease(Tween.EASE_OUT)
+		else:
+			ui_tween.set_ease(Tween.EASE_IN)
 		delay += delay_add
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,right,Vector2(-220,0), 0.3,0.2 ,0.5)
+	ui_tweener_handler(toggled_on,right,Vector2(-220,0), 0.3,0.2 ,0.5,0,false)
 
 
 func _on_check_box_2_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,left,Vector2(180,0), 0.3,0.2 ,0.5)
+	ui_tweener_handler(toggled_on,left,Vector2(180,0), 0.3,0.2 ,0.5,0,false)
 
 func _on_check_box_3_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,top,Vector2(0,70), 0.3,0.2 ,0.5)
+	ui_tweener_handler(toggled_on,top,Vector2(0,70), 0.3,0.2 ,0.5,0,false)
+
+
+func _on_check_box_4_toggled(toggled_on: bool) -> void:
+	ui_tweener_handler(toggled_on,color_picker,Vector2(0,-600), 0.8,0.2 ,0.5,toggled_on,false)
+	ui_tweener_handler(toggled_on,grid,Vector2(0,-600), 0.8,0.1 ,0.1,0,!toggled_on)
+
+
+func _on_color_picker_color_changed(color: Color) -> void:
+	var style_box = ui_theme.get_stylebox("panel","Panel")
+	if style_box is StyleBoxFlat:
+		style_box.bg_color = color
