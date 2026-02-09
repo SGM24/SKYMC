@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfur8sjvlo6dm"]
+
+[ext_resource type="Script" uid="uid://d08mx0yiqx1uh" path="res://midi.gd" id="1_wj7nr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_wj7nr")
+
+[node name="output_selector" type="OptionButton" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 20.0
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_top = 136.0
+offset_right = 68.5625
+offset_bottom = 167.0
+placeholder_text = "port"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 192.0
+offset_right = 194.0
+offset_bottom = 223.0
+text = "start server"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 136.0
+offset_right = 149.0
+offset_bottom = 168.0
+text = "127.0.0.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 113.0
+offset_bottom = 71.0
+text = "Refresh midi ports
+"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 248.0
+offset_right = 221.0
+offset_bottom = 271.0
+text = "deafult port : 700"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 136.0
+offset_right = 247.0
+offset_bottom = 167.0
+text = "Home"
+
+[connection signal="item_selected" from="output_selector" to="." method="_on_output_selector_item_selected"]
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]

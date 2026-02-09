@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjb6170ovlriv"]
+
+[ext_resource type="Script" uid="uid://cdh5487ad386h" path="res://macro.gd" id="1_dy12g"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_dy12g")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_top = 136.0
+offset_right = 68.5625
+offset_bottom = 167.0
+placeholder_text = "port"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 192.0
+offset_right = 194.0
+offset_bottom = 223.0
+text = "start server"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 136.0
+offset_right = 149.0
+offset_bottom = 168.0
+text = "127.0.0.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 248.0
+offset_right = 221.0
+offset_bottom = 271.0
+text = "deafult port : 700"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Home"
+
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

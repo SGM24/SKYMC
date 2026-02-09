@@ -9,13 +9,16 @@ var scales = {
 	"harmonic_minor": [0, 2, 3, 5, 7, 8, 11]
 }
 var selected_scale : Array = scales["major"]
-var octave : int = 4
+var octave : int = 5
 var semitone : int = 0
 var columns : int = 5
 var rows : int = 3
 var total_buttons : int = 0
 @export var grid : GridContainer
-@export var octave_number : Node
+@export var octave_number : Label
+@export var columns_text : Label
+@export var rows_text : Label
+@export var semitone_text : Label
 @export var scale_selector : OptionButton
 @export var slider : VSlider
 @export var button_scene : PackedScene
@@ -28,11 +31,13 @@ var total_buttons : int = 0
 @export var left : Control
 @export var right : Control
 @export var color_picker : Control
+@export var graphs : Control
 var sustain : bool = false
 var midi_on : bool = false
-var sound : bool = false
+var sound : bool = true
+var bend_latch : bool = false
 var ip_address : String
-var port : int = 0
+var port : int = 700
 var udp = PacketPeerUDP.new()
 func _ready() -> void:
 	grid.add_theme_constant_override("v_separation", 25)
@@ -82,7 +87,10 @@ func _on_note_pressed(note):
 		var stream = stream_player.instantiate()
 		stream.pitch_scale = pow(2.0, (note - 69.0) / 12.0)
 		stream.name = str(note)
+		var bend_semitones = ((slider.value - 8192.0) / 8192.0) * 2.0
+		var bend_pitch_multiplier = pow(2.0, bend_semitones / 12)
 		stream.base_pitch = stream.pitch_scale
+		stream.pitch_scale = stream.base_pitch * bend_pitch_multiplier
 		add_child(stream)
 
 func _on_note_released(note : int ):
@@ -180,11 +188,11 @@ func _on_button_pressed() -> void:
 func _on_plus_1_pressed() -> void:
 	semitone += 1
 	update_buttons_note()
-	$semitone_changer/octave.text = str(semitone)
+	semitone_text.text = str(semitone)
 func _on_minus_2_pressed() -> void:
 	semitone -= 1
 	update_buttons_note()
-	$semitone_changer/octave.text = str(semitone)
+	semitone_text.text = str(semitone)
 
 
 func _on_sound_toggled(toggled_on: bool) -> void:
@@ -193,23 +201,23 @@ func _on_sound_toggled(toggled_on: bool) -> void:
 
 func _on_colump_pressed() -> void:
 	columns += 1
-	$columns/octave.text = str(columns)
+	columns_text.text = str(columns)
 	reload_buttons(columns,rows)
 
 func _on_columm_pressed() -> void:
 	columns -= 1
-	$columns/octave.text = str(columns)
+	columns_text.text = str(columns)
 	reload_buttons(columns,rows)
 
 
 func _on_rowp_pressed() -> void:
 	rows += 1
-	$rows/octave.text = str(rows)
+	rows_text.text = str(rows)
 	reload_buttons(columns,rows)
 
 func _on_rowm_pressed() -> void:
 	rows -= 1
-	$rows/octave.text = str(rows)
+	rows_text.text = str(rows)
 	reload_buttons(columns,rows)
 
 
@@ -224,13 +232,14 @@ func _on_hide_toggled(toggled_on: bool) -> void:
 				i.visible = true
 
 var slider_tween : Tween
-func _on_v_slider_drag_ended(value_changed: bool) -> void:
-	if slider_tween and slider_tween.is_valid():
-		slider_tween.kill()
-	slider_tween = create_tween()
-	slider_tween.set_ease(Tween.EASE_IN_OUT)
-	slider_tween.set_trans(Tween.TRANS_BACK)
-	slider_tween.tween_property(slider,"value",8192.0,0.5)
+func _on_v_slider_drag_ended(_value_changed: bool) -> void:
+	if !bend_latch:
+		if slider_tween and slider_tween.is_valid():
+			slider_tween.kill()
+		slider_tween = create_tween()
+		slider_tween.set_ease(Tween.EASE_IN_OUT)
+		slider_tween.set_trans(Tween.TRANS_BACK)
+		slider_tween.tween_property(slider,"value",8192.0,0.5)
 
 
 
@@ -251,7 +260,7 @@ func _on_pitch_bend_value_changed(value: float) -> void:
 				i.pitch_scale = i.base_pitch * bend_pitch_multiplier
 
 
-func ui_tweener_handler(toggled_on :bool ,root : Node, add_pos : Vector2 ,time :float,delay_add : float, interval : float, initial_delay : float,reverse : bool):
+func ui_tweener_handler(toggled_on :bool ,root : Node, add_pos : Vector2 ,time :float,delay_add : float, initial_delay : float,reverse : bool):
 	var childrens = root.get_children()
 	if reverse: childrens.reverse()
 	if initial_delay > 0:
@@ -274,22 +283,31 @@ func ui_tweener_handler(toggled_on :bool ,root : Node, add_pos : Vector2 ,time :
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,right,Vector2(-220,0), 0.3,0.2 ,0.5,0,false)
+	ui_tweener_handler(toggled_on,right,Vector2(-220,0), 0.3,0.2 ,0,false)
 
 
 func _on_check_box_2_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,left,Vector2(180,0), 0.3,0.2 ,0.5,0,false)
+	ui_tweener_handler(toggled_on,left,Vector2(180,0), 0.3,0.2,0,false)
 
 func _on_check_box_3_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,top,Vector2(0,70), 0.3,0.2 ,0.5,0,false)
+	ui_tweener_handler(toggled_on,top,Vector2(0,70), 0.3,0.2,0,false)
 
 
 func _on_check_box_4_toggled(toggled_on: bool) -> void:
-	ui_tweener_handler(toggled_on,color_picker,Vector2(0,-600), 0.8,0.2 ,0.5,toggled_on,false)
-	ui_tweener_handler(toggled_on,grid,Vector2(0,-600), 0.8,0.1 ,0.1,0,!toggled_on)
+	ui_tweener_handler(toggled_on,color_picker,Vector2(0,-600), 0.8,0.2,toggled_on,false)
+	ui_tweener_handler(toggled_on,grid,Vector2(0,-600), 0.8,0.1,0,!toggled_on)
 
 
 func _on_color_picker_color_changed(color: Color) -> void:
 	var style_box = ui_theme.get_stylebox("panel","Panel")
 	if style_box is StyleBoxFlat:
 		style_box.bg_color = color
+
+
+func _on_button_toggled(toggled_on: bool) -> void:
+	bend_latch = toggled_on
+	_on_v_slider_drag_ended(0)
+
+
+func _on_check_box_5_toggled(toggled_on: bool) -> void:
+	ui_tweener_handler(toggled_on,graphs,Vector2(0,-120), 0.3,0.2 ,0,false)

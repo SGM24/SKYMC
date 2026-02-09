@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbwtr0wmttotn"]
+[gd_scene load_steps=14 format=3 uid="uid://cbwtr0wmttotn"]
 
 [ext_resource type="Script" uid="uid://dl88nn61xd6cj" path="res://assets/scripts/Main.gd" id="1_npkpr"]
 [ext_resource type="PackedScene" uid="uid://ng8c7l524kn7" path="res://assets/scenes/Button.tscn" id="2_eruk6"]
@@ -8,22 +8,36 @@
 [ext_resource type="Texture2D" uid="uid://cxfpr724yhw02" path="res://assets/icons/square.svg" id="5_ajan2"]
 [ext_resource type="Texture2D" uid="uid://c715t8qjwxacl" path="res://assets/icons/circle.svg" id="6_cb1w8"]
 [ext_resource type="Script" uid="uid://b2sd7bev83ssl" path="res://assets/scripts/oscilloscope.gd" id="8_ajan2"]
+[ext_resource type="Texture2D" uid="uid://bhoj6bnrhgqyl" path="res://assets/icons/template.svg" id="8_cb1w8"]
+[ext_resource type="Script" uid="uid://drc13lsqramsr" path="res://assets/scripts/ui_button.gd" id="9_ittna"]
+[ext_resource type="Shader" uid="uid://dqowy258xptdg" path="res://assets/scenes/brightness.gdshader" id="10_cfala"]
 
-[node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "scale_selector", "slider", "top", "bottom", "left", "right", "color_picker")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cb1w8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0tkjb"]
+shader = ExtResource("10_cfala")
+shader_parameter/alpha_multiplier = 2.000000095
+
+[node name="Main" type="CanvasLayer" node_paths=PackedStringArray("grid", "octave_number", "columns_text", "rows_text", "semitone_text", "scale_selector", "slider", "center", "top", "bottom", "left", "right", "color_picker", "graphs")]
 script = ExtResource("1_npkpr")
 grid = NodePath("center/CenterContainer/GridContainer")
 octave_number = NodePath("right/octave_changer/octave")
-scale_selector = NodePath("top/scale_selector")
+columns_text = NodePath("right/columns/octave")
+rows_text = NodePath("right/rows/octave")
+semitone_text = NodePath("right/semitone_changer/octave")
+scale_selector = NodePath("right/scale_selector")
 slider = NodePath("left/pitch_bend")
 button_scene = ExtResource("2_eruk6")
 stream_player = ExtResource("3_jv468")
 button_icons = Array[CompressedTexture2D]([ExtResource("4_3qypx"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8"), ExtResource("5_ajan2"), ExtResource("6_cb1w8")])
 ui_theme = ExtResource("2_xt100")
+center = NodePath("center")
 top = NodePath("top")
 bottom = NodePath("bottom")
 left = NodePath("left")
 right = NodePath("right")
 color_picker = NodePath("color_picker")
+graphs = NodePath("graphs")
 
 [node name="center" type="Control" parent="."]
 layout_mode = 3
@@ -87,59 +101,106 @@ layout_mode = 0
 offset_left = -88.0
 offset_right = 22.0
 offset_bottom = 31.0
+button_pressed = true
 text = "sound"
-
-[node name="scale_selector" type="OptionButton" parent="top"]
-layout_mode = 0
-offset_left = 64.0
-offset_right = 177.0
-offset_bottom = 31.0
-alignment = 1
 
 [node name="bottom" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 12
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("9_ittna")
 
-[node name="CheckBox" type="CheckBox" parent="bottom"]
+[node name="settings" type="CheckBox" parent="bottom"]
 layout_mode = 0
-offset_left = 384.0
-offset_top = -64.0
-offset_right = 408.0
-offset_bottom = -40.0
-theme = ExtResource("2_xt100")
-text = "1"
+offset_left = -264.0
+offset_top = -80.0
+offset_right = -192.0
+offset_bottom = -8.0
+pivot_offset = Vector2(36, 36)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cb1w8")
+theme_override_icons/checked = ExtResource("8_cb1w8")
+theme_override_icons/unchecked = ExtResource("8_cb1w8")
+flat = true
+icon_alignment = 1
 
-[node name="CheckBox2" type="CheckBox" parent="bottom"]
+[node name="Panel" type="Panel" parent="bottom"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_0tkjb")
 layout_mode = 0
-offset_left = 456.0
-offset_top = -64.0
-offset_right = 505.0
-offset_bottom = -6.0
+offset_left = -264.0
+offset_top = -80.0
+offset_right = -192.0
+offset_bottom = -8.0
+mouse_filter = 2
 theme = ExtResource("2_xt100")
-text = "2"
 
-[node name="CheckBox3" type="CheckBox" parent="bottom"]
-layout_mode = 0
-offset_left = 520.0
-offset_top = -64.0
-offset_right = 569.0
-offset_bottom = -6.0
-theme = ExtResource("2_xt100")
-text = "3"
+[node name="control" type="Control" parent="bottom"]
+clip_children = 2
+clip_contents = true
+anchors_preset = 0
+offset_left = -192.0
+offset_top = -80.0
+offset_right = 448.0
 
-[node name="CheckBox4" type="CheckBox" parent="bottom"]
+[node name="CheckBox" type="CheckBox" parent="bottom/control"]
+z_index = -1
 layout_mode = 0
-offset_left = 584.0
-offset_top = -64.0
-offset_right = 633.0
-offset_bottom = -6.0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 66.0
+mouse_filter = 2
 theme = ExtResource("2_xt100")
-text = "3"
+text = "🎹"
+
+[node name="CheckBox2" type="CheckBox" parent="bottom/control"]
+z_index = -1
+layout_mode = 0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme = ExtResource("2_xt100")
+text = "🎛️"
+
+[node name="CheckBox3" type="CheckBox" parent="bottom/control"]
+z_index = -1
+layout_mode = 0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme = ExtResource("2_xt100")
+text = "🛜"
+
+[node name="CheckBox5" type="CheckBox" parent="bottom/control"]
+z_index = -1
+layout_mode = 0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme = ExtResource("2_xt100")
+text = "📈"
+
+[node name="CheckBox4" type="CheckBox" parent="bottom/control"]
+z_index = -1
+layout_mode = 0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme = ExtResource("2_xt100")
+text = "🌈"
 
 [node name="left" type="Control" parent="."]
 layout_mode = 3
@@ -148,6 +209,14 @@ anchor_bottom = 1.0
 offset_left = -144.0
 offset_right = -144.0
 grow_vertical = 2
+
+[node name="Button" type="CheckButton" parent="left"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 72.0
+offset_right = 120.0
+offset_bottom = 128.0
+text = "Latch"
 
 [node name="Label" type="Label" parent="left"]
 layout_mode = 0
@@ -163,6 +232,7 @@ layout_mode = 0
 offset_top = 184.0
 offset_right = 128.0
 offset_bottom = 472.0
+mouse_filter = 1
 theme = ExtResource("2_xt100")
 max_value = 16383.0
 value = 8192.0
@@ -175,6 +245,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="scale_selector" type="OptionButton" parent="right"]
+layout_mode = 0
+offset_left = 16.0
+offset_right = 208.0
+offset_bottom = 31.0
+alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="right"]
 layout_mode = 0
@@ -207,7 +284,7 @@ offset_top = 50.31534
 offset_right = 44.999992
 offset_bottom = 100.31534
 theme = ExtResource("2_xt100")
-text = "4"
+text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -259,7 +336,6 @@ theme = ExtResource("2_xt100")
 text = "0
 "
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="plus1" type="Button" parent="right/semitone_changer"]
 layout_mode = 0
@@ -380,20 +456,6 @@ rotation = -3.1415927
 theme = ExtResource("2_xt100")
 text = ">"
 
-[node name="graph" type="Panel" parent="."]
-offset_left = 32.0
-offset_top = 520.0
-offset_right = 272.0
-offset_bottom = 632.0
-
-[node name="Line2D" type="Line2D" parent="graph"]
-position = Vector2(0, 56)
-scale = Vector2(0.3, 0.3)
-joint_mode = 2
-antialiased = true
-script = ExtResource("8_ajan2")
-x_scale = 3.0
-
 [node name="color_picker" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 8
@@ -451,17 +513,44 @@ offset_bottom = 572.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="graphs" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="graph" type="Panel" parent="graphs"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 248.0
+offset_bottom = 152.0
+
+[node name="Line2D" type="Line2D" parent="graphs/graph"]
+position = Vector2(0, 56)
+scale = Vector2(0.3, 0.3)
+joint_mode = 2
+antialiased = true
+script = ExtResource("8_ajan2")
+x_scale = 3.0
+
 [connection signal="text_changed" from="top/osc_ip" to="." method="_on_osc_ip_text_changed"]
 [connection signal="text_changed" from="top/osc_port" to="." method="_on_osc_port_text_changed"]
 [connection signal="pressed" from="top/Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="top/sound" to="." method="_on_sound_toggled"]
-[connection signal="item_selected" from="top/scale_selector" to="." method="_on_scale_selector_item_selected"]
-[connection signal="toggled" from="bottom/CheckBox" to="." method="_on_check_box_toggled"]
-[connection signal="toggled" from="bottom/CheckBox2" to="." method="_on_check_box_2_toggled"]
-[connection signal="toggled" from="bottom/CheckBox3" to="." method="_on_check_box_3_toggled"]
-[connection signal="toggled" from="bottom/CheckBox4" to="." method="_on_check_box_4_toggled"]
+[connection signal="toggled" from="bottom/settings" to="bottom" method="_on_settings_toggled"]
+[connection signal="toggled" from="bottom/control/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="toggled" from="bottom/control/CheckBox2" to="." method="_on_check_box_2_toggled"]
+[connection signal="toggled" from="bottom/control/CheckBox3" to="." method="_on_check_box_3_toggled"]
+[connection signal="toggled" from="bottom/control/CheckBox5" to="." method="_on_check_box_5_toggled"]
+[connection signal="toggled" from="bottom/control/CheckBox4" to="." method="_on_check_box_4_toggled"]
+[connection signal="toggled" from="left/Button" to="." method="_on_button_toggled"]
 [connection signal="drag_ended" from="left/pitch_bend" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="left/pitch_bend" to="." method="_on_pitch_bend_value_changed"]
+[connection signal="item_selected" from="right/scale_selector" to="." method="_on_scale_selector_item_selected"]
 [connection signal="toggled" from="right/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="right/octave_changer/plus" to="." method="_on_plus_pressed"]
 [connection signal="pressed" from="right/octave_changer/minus" to="." method="_on_minus_pressed"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="udp_to_midi"
-run/main_scene="uid://cfur8sjvlo6dm"
+run/main_scene="uid://c66p8esun6pqi"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://c66p8esun6pqi"]
+
+[ext_resource type="Script" uid="uid://de46r2tfura2q" path="res://main.gd" id="1_ig7tw"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_right = 306.0
+offset_bottom = 23.0
+text = "Alpha V1.0"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 72.0
+offset_right = 220.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 23
+text = "CloudRouter"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 128.0
+offset_right = 215.0
+offset_bottom = 159.0
+text = "Midi output"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 168.0
+offset_right = 215.0
+offset_bottom = 199.0
+text = "Keyboard Macro"
+
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
