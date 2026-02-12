@@ -2,6 +2,6 @@
 * text=auto
 
 # Language Statistics Overrides
-PC/Python/build/MacroHandler* linguist-documentation
-screenshots/* linguist-documentation
-*.gd linguist-detectable
+*.html linguist-vendored
+
+*.tex linguist-vendored
